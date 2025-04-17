@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  owner
+  viewer
+  editor
+}
+
+// model user {
+//   id        String     @id @default(uuid())
+//   username  String     @unique
+//   email     String     @unique
+//   password  String
+//   hasBoard  board?
+//   hasUser   boardMem[]
+// }
+
+// model board {
+//   id        String         @id @default(uuid())
+//   owner     user           @relation(fields: [ownerId], references: [id])
+//   ownerId   String         @unique
+//   boardName String
+//   boardDes  String
+//   hasUser   boardMem[]
+//   boardTask tasks[]
+//   boardText markdowntext[]
+// }
+
+model boardMem {
+  boardMem String @id @default(uuid())
+  // inBoard     board    @relation(fields: [inBoardId], references: [id])
+  // inBoardId   String   
+  // userBoard   user     @relation(fields: [userBoardId], references: [id])
+  // userBoardId String 
+  role     Role   @default(viewer)
+}
+
+// model tasks {
+//   taskid      String   @id @default(uuid())
+//   taskBoard   board    @relation(fields: [taskBoardId], references: [id])
+//   taskBoardId String
+//   name        String
+//   description String?
+
+// }
+
+// model markdowntext {
+//   textid      String   @id @default(uuid())
+//   textBoard   board    @relation(fields: [textBoardId], references: [id])
+//   textBoardId String
+//   content     String
+// }
