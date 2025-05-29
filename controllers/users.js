@@ -1,0 +1,1 @@
+console.log("this connects the model with the view")

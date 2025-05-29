@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/22</span>
+                <span class='fraction'>24/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.47% </span>
+                <span class="strong">85.18% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>19/21</span>
+                <span class='fraction'>23/27</span>
             </div>
         
             
@@ -88,13 +88,18 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -105,10 +110,27 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -121,20 +143,31 @@ const userRouter = require("./routes/boards")
 const newBoardMem = require("./routes/board_members")
 const newTask = require("./routes/tasks")
 const newMarkDown = require("./routes/markDownText")
+const loginfo = require("./controllers/login");
+const {hash_password, compare } = require("./routes/hash")
+&nbsp;
+app.use(express.json())
 app.use("/boardMem", newBoardMem)
 app.use("/tasks", newTask)
 app.use("/markdowntext", newMarkDown)
-app.use(express.json())
-app.use("/tulu", userRouter)
+app.use("/board", userRouter)
+app.use("/login", loginfo)
+app.set('view engine', 'ejs')
+&nbsp;
 app.get("/", async (req, res) =&gt; {
-    const displayUser = await prisma.user.findMany();
-    res.json(displayUser)
+        const displayUser = await prisma.user.findMany();
+        res.json(displayUser)   
+    
 })
 &nbsp;
 app.post("/", <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >        req.body.password = hash_password(req.body.password);</span>
+<span class="cstat-no" title="statement not covered" >        console.log(req.body.password)</span>
         const newUser = <span class="cstat-no" title="statement not covered" >await prisma.user.create({data : req.body})</span>
 <span class="cstat-no" title="statement not covered" >        res.json(newUser)</span>
 })
+&nbsp;
+&nbsp;
 &nbsp;
 app.listen(3000, () =&gt; console.log(`running from port 3000`))
 &nbsp;
@@ -145,7 +178,7 @@ module.exports = app</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-04-17T01:24:58.910Z
+                at 2025-05-28T15:21:25.327Z
             </div>
         <script src="../prettify.js"></script>
         <script>
